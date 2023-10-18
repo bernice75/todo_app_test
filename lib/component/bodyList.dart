@@ -17,21 +17,20 @@ class BodyList extends StatelessWidget {
     return ListView.builder(
       itemCount: todos.length,
       itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.all(5),
-          child: InkWell(
-            child: GetBuilder<Todo>(
-              init: todos[index],
-              builder: (Todo controller) => ListTile(
+        return GetBuilder<TodoList>(
+          builder: (controller) => Padding(
+            padding: const EdgeInsets.all(5),
+            child: InkWell(
+              child: ListTile(
                 leading: IconButton(
                   onPressed: () {
-                    todos[index].isCircleChange();
+                    controller.isCircleChange(controller.todoList[index]);
                   },
                   icon: Icon(
-                    todos[index].isCircle
+                    controller.todoList[index].isCircle
                         ? Icons.check_circle
                         : Icons.circle_outlined,
-                    color: todos[index].isCircle
+                    color: controller.todoList[index].isCircle
                         ? const Color.fromARGB(255, 116, 137, 214)
                         : Colors.grey,
                     size: 25,
@@ -43,18 +42,37 @@ class BodyList extends StatelessWidget {
                 tileColor: Colors.white.withOpacity(0.85),
                 title: Text(todos[index].title),
                 subtitle: Text(todos[index].content),
-                trailing: IconButton(
-                  onPressed: () {
-                    todos[index].isStarChange();
-                  },
-                  icon: Icon(
-                    todos[index].isStar
-                        ? Icons.star
-                        : Icons.star_border_rounded,
-                    color:
-                        todos[index].isStar ? Colors.yellow[600] : Colors.grey,
-                    size: 25,
-                  ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+                      onPressed: () {
+                        controller.isStarChange(controller.todoList[index]);
+                      },
+                      icon: Icon(
+                        controller.todoList[index].isStar
+                            ? Icons.star
+                            : Icons.star_border_rounded,
+                        color: controller.todoList[index].isStar
+                            ? Colors.yellow[600]
+                            : Colors.grey,
+                        size: 25,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        controller.removeList(controller.todoList[index]);
+                      },
+                      icon: Icon(
+                        Icons.delete_rounded,
+                        color: Colors.red[400],
+                        size: 25,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

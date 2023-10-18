@@ -12,27 +12,28 @@ class Todo extends GetxController {
     required this.title,
     required this.content,
   });
-
-  void isCircleChange() {
-    _isCircle = !_isCircle;
-    update();
-  }
-
-  void isStarChange() {
-    _isStar = !_isStar;
-    update();
-  }
 }
 
 class TodoList extends GetxController {
-  RxList<Todo> todoList = [
-    Todo(
-      title: "tdtd",
-      content: "lsls",
-    ),
-    Todo(
-      title: "tdtd",
-      content: "lsls",
-    ),
-  ].obs;
+  List<Todo> todoList = [];
+
+  addList(Todo item) {
+    todoList.add(item);
+    update();
+  }
+
+  removeList(Todo item) {
+    todoList.remove(item);
+    update();
+  }
+
+  isCircleChange(Todo item) {
+    item._isCircle = !item._isCircle;
+    update();
+  }
+
+  isStarChange(Todo item) {
+    item._isStar = !item._isStar;
+    update();
+  }
 }

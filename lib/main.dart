@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:todo_app_test/component/todo.dart';
 import 'package:todo_app_test/todo_app.dart';
 
 void main() {
+  Get.put(TodoList());
   runApp(const MyApp());
 }
 
